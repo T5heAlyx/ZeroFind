@@ -1,4 +1,4 @@
-# ZeroFind Zaafiyet Tarama Aracı
+# ZeroFind Zaafiyet Tarama Aracı - by wr4th0
 
 ![version](https://img.shields.io/badge/version-2.0-blue)
 ![language](https://img.shields.io/badge/language-Python-green)
