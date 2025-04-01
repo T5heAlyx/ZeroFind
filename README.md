@@ -45,7 +45,7 @@ ZeroFind, web sitelerinin ve ağ sistemlerinin güvenlik açıklarını tespit e
 2. Projeyi ZIP olarak indirin ve bir klasöre çıkarın
 3. Komut istemini (cmd) açın ve klasöre gidin:
 ```cmd
-cd yol\to\zerofind
+cd yol\to\ZeroFind
 ```
 4. Kurulum asistanını çalıştırın:
 ```cmd
@@ -65,8 +65,8 @@ sudo apt install python3 python3-pip python3-venv git
 ```
 2. Projeyi klonlayın:
 ```bash
-git clone https://github.com/wr4thinfo/zerofind.git
-cd zerofind
+git clone https://github.com/T5heAlyx/ZeroFind.git
+cd ZeroFind
 ```
 3. Sanal ortam oluşturun ve etkinleştirin (opsiyonel ama önerilen):
 ```bash
@@ -91,8 +91,8 @@ brew install python
 ```
 3. Projeyi klonlayın:
 ```bash
-git clone https://github.com/wr4thinfo/zerofind.git
-cd zerofind
+git clone https://github.com/T5heAlyx/ZeroFind.git
+cd ZeroFind
 ```
 4. Kurulum asistanını çalıştırın:
 ```bash
@@ -113,8 +113,8 @@ pkg install python git
 ```
 3. Projeyi klonlayın:
 ```bash
-git clone https://github.com/wr4thinfo/zerofind.git
-cd zerofind
+git clone https://github.com/T5heAlyx/ZeroFind.git
+cd ZeroFind
 ```
 4. Kurulum asistanını çalıştırın:
 ```bash
