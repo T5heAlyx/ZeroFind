@@ -244,4 +244,4 @@ MIT Lisansı altında dağıtılmaktadır. Detaylar için `LICENSE` dosyasına b
 
 ## 👨‍💻 Credits
 
-Made by wr4th0 (2025)
+-made by wr4th0- (2025)
