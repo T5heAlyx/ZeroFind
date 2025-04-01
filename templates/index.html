@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="nexus-hero">
+    <h1>ZeroFind Güvenlik Tarama Aracı</h1>
+    <p>Web sitelerinin ve ağ sistemlerinin güvenlik açıklarını tespit eden kapsamlı bir tarama aracı. Port taraması yapın, zafiyetleri belirleyin ve sistemlerinizi güvence altına alın.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="nexus-card">
+            <div class="nexus-card-header">
+                <h3><i class="fas fa-search"></i> Yeni Tarama Başlat</h3>
+            </div>
+            <div class="nexus-card-content">
+                <form id="scan-form" action="{{ url_for('scan') }}" method="POST" enctype="multipart/form-data">
+                    <div class="nexus-form-group mb-4">
+                        <label for="target">Hedef (Domain veya IP)</label>
+                        <input type="text" id="target" name="target" class="nexus-input" 
+                               placeholder="örnek.com veya 192.168.1.1" required>
+                        <small class="form-text text-muted">Örnekler: example.com, 192.168.1.1, https://example.org/</small>
+                    </div>
+                    
+                    <div class="nexus-form-group mb-4">
+                        <label for="scan_type">Tarama Tipi</label>
+                        <select id="scan_type" name="scan_type" class="nexus-select">
+                            <option value="hızlı">Hızlı Tarama</option>
+                            <option value="standart">Standart Tarama</option>
+                            <option value="derinlemesine">Derinlemesine Tarama</option>
+                        </select>
+                    </div>
+                    
+                    <div class="nexus-form-group mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="enable_batch" name="enable_batch">
+                            <label class="form-check-label" for="enable_batch">
+                                Toplu Tarama Modu (Dosyadan domain listesi)
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="batch_upload" class="nexus-form-group mb-4" style="display: none;">
+                        <label for="domain_file">Domain Listesi (TXT dosyası)</label>
+                        <input type="file" id="domain_file" name="domain_file" class="nexus-input" accept=".txt">
+                        <small class="text-muted">Her satıra bir domain gelecek şekilde .txt dosyası yükleyin</small>
+                    </div>
+                    
+                    <div class="nexus-alert nexus-alert-info mb-4">
+                        <strong>Önemli:</strong> Tarama yapmadan önce hedef sistemin sahibi olduğunuzdan veya açık izniniz olduğundan emin olun. İzinsiz tarama yasal sonuçlar doğurabilir.
+                    </div>
+                    
+                    <button type="submit" class="nexus-btn nexus-btn-primary w-100 mb-3">
+                        <i class="fas fa-play"></i> Taramayı Başlat
+                    </button>
+                    
+                    <div class="d-flex align-items-center justify-content-center gap-2">
+                        <a href="#" onclick="openTerminal()" class="nexus-btn nexus-btn-secondary">
+                            <i class="fas fa-terminal"></i> Terminal Modunu Aç
+                        </a>
+                        <a href="{{ url_for('history') }}" class="nexus-btn nexus-btn-secondary">
+                            <i class="fas fa-history"></i> Tarama Geçmişi
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="nexus-card">
+            <div class="nexus-card-header">
+                <h3><i class="fas fa-shield-alt"></i> Neler Tarıyoruz?</h3>
+            </div>
+            <div class="nexus-card-content">
+                <div class="about-feature">
+                    <div class="about-feature-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="about-feature-content">
+                        <h3>Açık Port Taraması</h3>
+                        <p>Sisteminizdeki açık portları ve çalışan servisleri tespit eder. Bu, potansiyel saldırı yüzeyini belirlemeye yardımcı olur.</p>
+                    </div>
+                </div>
+                
+                <div class="about-feature">
+                    <div class="about-feature-icon">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <div class="about-feature-content">
+                        <h3>Güvenlik Açığı Analizi</h3>
+                        <p>Web sunucusu, SSL/TLS, uygulamalar ve servisler gibi bileşenlerde yaygın güvenlik açıklarını kontrol eder.</p>
+                    </div>
+                </div>
+                
+                <div class="about-feature">
+                    <div class="about-feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="about-feature-content">
+                        <h3>Detaylı Raporlama</h3>
+                        <p>Bulunan güvenlik açıklarını önem derecelerine göre sınıflandırır ve çözüm önerileri sunar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tarama Durumu (başlangıçta gizli) -->
+<div id="scanning-section" style="display: none;">
+    <div class="nexus-card mt-4">
+        <div class="nexus-card-header">
+            <h3><i class="fas fa-spinner fa-spin"></i> Tarama Yürütülüyor</h3>
+        </div>
+        <div class="nexus-card-content">
+            <div class="nexus-scan-animation">
+                <div class="loader"></div>
+                <h3 class="mt-4 scanning-text">Hedef taranıyor...</h3>
+                <p class="text-muted">Bu işlem birkaç dakika sürebilir. Lütfen bekleyin...</p>
+                
+                <button onclick="cancelScan()" class="nexus-btn nexus-btn-secondary mt-3">
+                    <i class="fas fa-times"></i> İptal Et
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sonuç alanı (başlangıçta gizli, JavaScript ile gösterilecek) -->
+<div id="scan-results-section" style="display: none;">
+    <!-- Sonuçlar buraya dinamik olarak eklenecek -->
+</div>
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="nexus-card">
+    <div class="nexus-card-header">
+        <h3><i class="fas fa-info-circle"></i> ZeroFind Hakkında</h3>
+    </div>
+    <div class="nexus-card-content">
+        <div class="about-section">
+            <h2 class="mb-4">ZeroFind: Güvenlik Tarama Aracı</h2>
+            
+            <p>ZeroFind, web sitelerinin ve ağ sistemlerinin güvenlik durumunu değerlendirmek için geliştirilmiş kapsamlı bir güvenlik tarama aracıdır. Açık portları tespit eder, yaygın güvenlik açıklarını belirler ve sonuçları detaylı raporlar.</p>
+            
+            <p>Bir Türk tarafından geliştirildiği için tamamen Türkçe arayüzü sayesinde yerli kullanıcılar için kolay kullanım sağlar ve güvenlik uzmanlarına, sistem yöneticilerine ve web geliştiricilerine değerli bilgiler sunar.</p>
+            
+            <h3 class="mt-5 mb-4">Özellikler</h3>
+            
+            <div class="about-feature">
+                <div class="about-feature-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="about-feature-content">
+                    <h4>Kapsamlı Port Taraması</h4>
+                    <p>ZeroFind, hedef sistemdeki açık portları tespit eder ve bu portlarda çalışan servisleri tanımlar. Bu bilgi, potansiyel saldırı yüzeyini anlamak için çok önemlidir.</p>
+                </div>
+            </div>
+            
+            <div class="about-feature">
+                <div class="about-feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="about-feature-content">
+                    <h4>Zafiyet Tespiti</h4>
+                    <p>Web sunucuları, veritabanları, SSL/TLS yapılandırmaları ve daha fazlasındaki yaygın güvenlik açıklarını tespit eder. Bulunan zafiyetler, önem derecesine göre sınıflandırılır.</p>
+                </div>
+            </div>
+            
+            <div class="about-feature">
+                <div class="about-feature-icon">
+                    <i class="fas fa-terminal"></i>
+                </div>
+                <div class="about-feature-content">
+                    <h4>Çift Arayüz</h4>
+                    <p>ZeroFind hem komut satırı arayüzü hem de web arayüzü sunar. Terminal severlere komut satırı esnekliği, görsel arayüz tercih edenlere ise modern web tabanlı deneyim sunar.</p>
+                </div>
+            </div>
+            
+            <div class="about-feature">
+                <div class="about-feature-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <div class="about-feature-content">
+                    <h4>Görsel Raporlama</h4>
+                    <p>Tarama sonuçları, anlaşılması kolay grafikler ve tablolarla görselleştirilir. Bu görsel öğeler, güvenlik durumunuzun anlık görüntüsünü verir.</p>
+                </div>
+            </div>
+            
+            <div class="about-feature">
+                <div class="about-feature-icon">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <div class="about-feature-content">
+                    <h4>Çoklu Tarama Seviyeleri</h4>
+                    <p>Hızlı taramadan derinlemesine analize kadar farklı tarama seviyeleri sunar. İhtiyacınıza göre hız ve detay dengesi kurabilirsiniz.</p>
+                </div>
+            </div>
+            
+            <h3 class="mt-5 mb-4">Kullanım Kılavuzu</h3>
+            
+            <h4>Web Arayüzü</h4>
+            <p>Web arayüzünü kullanmak için:</p>
+            <ol>
+                <li>Ana sayfadaki tarama formunu kullanarak bir hedef (domain veya IP adresi) belirleyin</li>
+                <li>Tarama tipini seçin (hızlı, standart veya derinlemesine)</li>
+                <li>"Taramayı Başlat" düğmesine tıklayın</li>
+                <li>Sonuçlar tamamlandığında otomatik olarak gösterilecektir</li>
+            </ol>
+            
+            <h4>Terminal Arayüzü</h4>
+            <p>Terminal arayüzünü kullanmak için:</p>
+            <div class="bg-dark text-light p-3 rounded">
+                <code>python zerofind.py -t</code>
+            </div>
+            <p class="mt-3">Komut satırı parametreleri:</p>
+            <ul>
+                <li><code>-t</code> veya <code>--terminal</code>: Terminal arayüzünü çalıştırır</li>
+                <li><code>-w</code> veya <code>--web</code>: Web arayüzünü çalıştırır</li>
+            </ul>
+            
+            <div class="nexus-alert nexus-alert-warning mt-5">
+                <h4><i class="fas fa-exclamation-triangle"></i> Önemli Uyarı</h4>
+                <p>ZeroFind'ı yalnızca kendi sistemlerinizde veya tarama yapmak için açık izin aldığınız sistemlerde kullanın. İzinsiz güvenlik taramaları yasal sonuçlar doğurabilir.</p>
+            </div>
+            
+            <h3 class="mt-5 mb-4">Teknik Detaylar</h3>
+            <p>ZeroFind, aşağıdaki teknolojileri kullanarak geliştirilmiştir:</p>
+            <ul>
+                <li><strong>Backend:</strong> Python, Flask, Python-nmap, Socket</li>
+                <li><strong>Frontend:</strong> HTML, CSS, JavaScript, Bootstrap, Chart.js</li>
+                <li><strong>Tarama Motorları:</strong> Nmap, özel Python modülleri</li>
+            </ul>
+            
+            <p class="mt-5">ZeroFind Wr4th tarafından geliştirilmiş, açık kaynak bir projedir ve sürekli olarak geliştirilmektedir. Öneri ve katkılarınızı bekliyoruz.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

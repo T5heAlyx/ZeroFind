@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=yes">
+    <title>ZeroFind - Güvenlik Tarama Aracı</title>
+    <meta name="description" content="ZeroFind, web sitelerinin ve ağ sistemlerinin güvenlik açıklarını tespit eden kapsamlı bir tarama aracıdır.">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- ZeroFind CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="nexus-container">
+        <!-- Header -->
+        <header class="nexus-header">
+            <div class="nexus-brand">
+                <i class="fas fa-bug-slash app-icon"></i>
+                <span>ZeroFind</span>
+            </div>
+            
+            <nav class="nexus-nav">
+                <a href="{{ url_for('index') }}">
+                    <i class="fas fa-home"></i><span class="nav-text">Ana Sayfa</span>
+                </a>
+                <a href="{{ url_for('history') }}">
+                    <i class="fas fa-history"></i><span class="nav-text">Tarama Geçmişi</span>
+                </a>
+                <a href="{{ url_for('about') }}">
+                    <i class="fas fa-info-circle"></i><span class="nav-text">Hakkında</span>
+                </a>
+            </nav>
+        </header>
+        
+        <!-- Main content -->
+        <main class="nexus-main">
+            <div class="nexus-page">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="nexus-alert nexus-alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="nexus-footer" style="background-color: #222; padding: 20px 0; border-top: 1px solid #444;">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <p style="color: #fff; font-weight: 300; margin-bottom: 10px;">ZeroFind &copy; 2025 | Güvenlik Tarama Aracı</p>
+                <div style="margin: 5px 0;">
+                    <a href="https://wr4thinfo.github.io" target="_blank" style="color: #fff; font-weight: 400; margin: 0 10px; text-decoration: none;">
+                        <i class="fas fa-globe"></i> Bağlantılar  
+                    </a> | 
+                    <a href="https://www.instagram.com/thewr4th/" target="_blank" style="color: #fff; font-weight: 400; margin: 0 10px; text-decoration: none;">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                </div>
+                <p class="made-by" style="color: #fff; font-weight: 500; margin-top: 10px; letter-spacing: 1px;">
+                    <i class="fas fa-code"></i> made by wr4th0
+                </p>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- ZeroFind JS -->
+    <script src="{{ url_for('static', filename='js/chart-config.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

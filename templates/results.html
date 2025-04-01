@@ -1,0 +1,248 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% if scan %}
+<!-- Tek tarama sonucu gösterimi -->
+<div class="nexus-card">
+    <div class="nexus-card-header">
+        <h3>
+            <i class="fas fa-clipboard-list"></i> Tarama Sonuçları
+            <input type="hidden" id="scan-id" value="{{ scan.id }}">
+        </h3>
+        <div>
+            <button onclick="exportResults('json')" class="nexus-btn nexus-btn-secondary">
+                <i class="fas fa-file-export"></i> JSON
+            </button>
+            <button onclick="exportResults('txt')" class="nexus-btn nexus-btn-secondary">
+                <i class="fas fa-file-alt"></i> Metin
+            </button>
+        </div>
+    </div>
+    <div class="nexus-card-content">
+        <div class="nexus-result-summary">
+            <div class="nexus-result-box success">
+                <h3>Hedef</h3>
+                <div class="value">{{ scan.target }}</div>
+            </div>
+            <div class="nexus-result-box info">
+                <h3>Tarama Tipi</h3>
+                <div class="value">{{ scan.scan_type|title }}</div>
+            </div>
+            <div class="nexus-result-box warning">
+                <h3>Açık Port Sayısı</h3>
+                <div class="value">{{ open_ports|length }}</div>
+            </div>
+            <div class="nexus-result-box danger">
+                <h3>Zafiyet Sayısı</h3>
+                <div class="value">{{ vulnerabilities|length }}</div>
+            </div>
+        </div>
+        
+        <!-- Grafikler -->
+        <div class="row g-2">
+            <div class="col-md-6 mb-3">
+                <div class="nexus-chart-container">
+                    <canvas id="port-chart"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="nexus-chart-container">
+                    <canvas id="vulnerability-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Açık Portlar -->
+        <div class="nexus-card mt-4">
+            <div class="nexus-card-header">
+                <h3><i class="fas fa-network-wired"></i> Açık Portlar</h3>
+            </div>
+            <div class="nexus-card-content">
+                {% if open_ports %}
+                <div class="table-responsive">
+                    <table class="nexus-table">
+                        <thead>
+                            <tr>
+                                <th>Port</th>
+                                <th>Protokol</th>
+                                <th>Servis</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for port in open_ports %}
+                            <tr class="port-data" data-port="{{ port.port_number }}" data-service="{{ port.service_name }}">
+                                <td>{{ port.port_number }}</td>
+                                <td>{{ port.protocol }}</td>
+                                <td>{{ port.service_name }}</td>
+                                <td>
+                                    <span class="nexus-badge {% if port.state == 'açık' %}nexus-badge-danger{% else %}nexus-badge-warning{% endif %}">
+                                        {{ port.state }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="nexus-alert nexus-alert-success">
+                    <i class="fas fa-check-circle"></i> Açık port bulunamadı.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Güvenlik Açıkları -->
+        <div class="nexus-card mt-4">
+            <div class="nexus-card-header">
+                <h3><i class="fas fa-bug"></i> Tespit Edilen Güvenlik Açıkları</h3>
+            </div>
+            <div class="nexus-card-content">
+                {% if vulnerabilities %}
+                <div class="accordion">
+                    {% for vuln in vulnerabilities %}
+                    <div class="vulnerability-data" data-severity="{{ vuln.severity }}">
+                        <div class="vulnerability-accordion-header {% if vuln.severity == 'kritik' %}bg-danger text-white{% elif vuln.severity == 'yüksek' %}bg-warning{% elif vuln.severity == 'orta' %}bg-info text-white{% else %}bg-light{% endif %}">
+                            <div class="d-flex justify-content-between align-items-center p-3 flex-wrap">
+                                <h5 class="mb-0 mb-md-0 me-2">{{ vuln.name }}</h5>
+                                <span class="nexus-badge {% if vuln.severity == 'kritik' %}nexus-badge-danger{% elif vuln.severity == 'yüksek' %}nexus-badge-danger{% elif vuln.severity == 'orta' %}nexus-badge-warning{% else %}nexus-badge-info{% endif %}">
+                                    {{ vuln.severity|title }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="vulnerability-accordion-content p-3 border">
+                            <div class="vulnerability-details">
+                                <h6>Açıklama:</h6>
+                                <p>{{ vuln.description }}</p>
+                                
+                                {% if vuln.cve_id %}
+                                <h6>CVE Numarası:</h6>
+                                <p>{{ vuln.cve_id }}</p>
+                                {% endif %}
+                                
+                                {% if vuln.recommendation %}
+                                <h6>Çözüm Önerisi:</h6>
+                                <p>{{ vuln.recommendation }}</p>
+                                {% endif %}
+                            
+                            {% if vuln.name == 'SQL Enjeksiyon Zafiyeti' %}
+                            <div class="nexus-alert nexus-alert-danger mt-3">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>Uyarı:</strong> URL parametreleri SQL enjeksiyona açık olabilir. Özellikle "id=" veya "page=" gibi parametreler risk altındadır.
+                            </div>
+                            {% endif %}
+                            
+                            {% if vuln.name == 'XSS (Cross-Site Scripting) Zafiyeti' %}
+                            <div class="nexus-alert nexus-alert-danger mt-3">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>Uyarı:</strong> Web uygulamanız kullanıcı tarafından sağlanan verileri filtrelemeden görüntüleyerek kötü amaçlı script çalıştırma saldırılarına açık olabilir.
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="nexus-alert nexus-alert-success">
+                    <i class="fas fa-check-circle"></i> Güvenlik açığı tespit edilmedi.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Tarama Detayları -->
+        <div class="nexus-card mt-4">
+            <div class="nexus-card-header">
+                <h3><i class="fas fa-info-circle"></i> Tarama Bilgileri</h3>
+            </div>
+            <div class="nexus-card-content">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Tarama ID</span>
+                        <span class="badge bg-primary rounded-pill">{{ scan.id }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Tarama Tarihi</span>
+                        <span>{{ scan.scan_date.strftime('%d.%m.%Y %H:%M') }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Tamamlanma Süresi</span>
+                        <span>{{ "%.2f"|format(scan.duration) }} saniye</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Durum</span>
+                        <span class="badge {% if scan.status == 'tamamlandı' %}bg-success{% elif scan.status == 'başarısız' %}bg-danger{% else %}bg-warning{% endif %} rounded-pill">
+                            {{ scan.status }}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Yeni Tarama Düğmesi -->
+        <div class="text-center mt-4">
+            <a href="{{ url_for('index') }}" class="nexus-btn nexus-btn-primary">
+                <i class="fas fa-plus-circle"></i> Yeni Tarama Başlat
+            </a>
+        </div>
+    </div>
+</div>
+
+{% elif history %}
+<!-- Tarama geçmişi gösterimi -->
+<div class="nexus-card">
+    <div class="nexus-card-header">
+        <h3><i class="fas fa-history"></i> Tarama Geçmişi</h3>
+    </div>
+    <div class="nexus-card-content">
+        {% if history %}
+        <div class="table-responsive">
+            <table class="nexus-table scan-history-table">
+                <thead>
+                    <tr>
+                        <th data-column="id">#</th>
+                        <th data-column="target">Hedef</th>
+                        <th data-column="type">Tarama Tipi</th>
+                        <th data-column="date">Tarih</th>
+                        <th data-column="status">Durum</th>
+                        <th data-column="actions">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for scan in history %}
+                    <tr>
+                        <td data-column="id">{{ scan.id }}</td>
+                        <td data-column="target">{{ scan.target }}</td>
+                        <td data-column="type">{{ scan.scan_type }}</td>
+                        <td data-column="date">{{ scan.scan_date.strftime('%d.%m.%Y %H:%M') }}</td>
+                        <td data-column="status">
+                            <span class="nexus-badge {% if scan.status == 'tamamlandı' %}nexus-badge-success{% elif scan.status == 'başarısız' %}nexus-badge-danger{% else %}nexus-badge-warning{% endif %}">
+                                {{ scan.status }}
+                            </span>
+                        </td>
+                        <td data-column="actions">
+                            <a href="{{ url_for('results', scan_id=scan.id) }}" class="btn btn-sm btn-primary">
+                                <i class="fas fa-eye"></i> Görüntüle
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="nexus-alert nexus-alert-info">
+            <i class="fas fa-info-circle"></i> Henüz tarama geçmişi bulunmuyor.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% else %}
+<div class="nexus-alert nexus-alert-warning">
+    <i class="fas fa-exclamation-triangle"></i> Tarama sonucu bulunamadı.
+</div>
+{% endif %}
+
+{% endblock %}

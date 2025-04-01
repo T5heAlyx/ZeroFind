@@ -1,0 +1,317 @@
+{% extends 'layout.html' %}
+
+{% block title %}Terminal Arayüzü - ZeroFind{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="nexus-card">
+        <div class="nexus-card-header">
+            <h3><i class="fas fa-terminal"></i> ZeroFind Terminal Arayüzü</h3>
+        </div>
+        <div class="nexus-card-content">
+            <div class="terminal-container">
+                <div id="terminal-header">
+                    <span>ZeroFind Terminal v1.0 (2025)</span>
+                </div>
+                <div id="terminal-output"></div>
+                <div id="terminal-input-line">
+                    <span class="terminal-prompt">ZeroFind&gt;</span>
+                    <input type="text" id="terminal-input" autofocus>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <h4>Kullanılabilir Komutlar:</h4>
+                <ul>
+                    <li><code>scan [hedef] [hızlı|standart|derinlemesine]</code> - Hedef üzerinde tarama başlat</li>
+                    <li><code>help</code> - Yardım bilgilerini göster</li>
+                    <li><code>history</code> - Tarama geçmişini göster</li>
+                    <li><code>clear</code> - Terminal çıktısını temizle</li>
+                    <li><code>exit</code> - Terminal penceresini kapat</li>
+                </ul>
+            </div>
+            
+            <div class="nexus-alert nexus-alert-warning mt-4">
+                <h4><i class="fas fa-exclamation-triangle"></i> Önemli Uyarı</h4>
+                <p>ZeroFind'ı yalnızca kendi sistemlerinizde veya tarama yapmak için açık izin aldığınız sistemlerde kullanın. İzinsiz güvenlik taramaları yasal sonuçlar doğurabilir.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .terminal-container {
+        background-color: #1a1a1a;
+        color: #33ff33;
+        border-radius: 5px;
+        font-family: 'Courier New', monospace;
+        height: 400px;
+        overflow-y: auto;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    #terminal-header {
+        color: #fff;
+        background-color: #333;
+        padding: 5px 10px;
+        border-radius: 5px 5px 0 0;
+        margin: -10px -10px 10px -10px;
+        font-weight: bold;
+    }
+    
+    #terminal-output {
+        flex-grow: 1;
+        overflow-y: auto;
+        margin-bottom: 10px;
+        white-space: pre-wrap;
+    }
+    
+    #terminal-input-line {
+        display: flex;
+        align-items: center;
+    }
+    
+    .terminal-prompt {
+        color: #33ff33;
+        margin-right: 5px;
+    }
+    
+    #terminal-input {
+        flex-grow: 1;
+        background-color: transparent;
+        border: none;
+        color: #33ff33;
+        font-family: 'Courier New', monospace;
+        font-size: 1em;
+        outline: none;
+    }
+    
+    .terminal-command {
+        color: #33ff33;
+    }
+    
+    .terminal-output {
+        color: #ffffff;
+    }
+    
+    .terminal-error {
+        color: #ff5555;
+    }
+    
+    .terminal-success {
+        color: #55ff55;
+    }
+    
+    .terminal-warning {
+        color: #ffff55;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const terminal = document.getElementById('terminal-output');
+    const input = document.getElementById('terminal-input');
+    
+    // Terminal geçmişi
+    let commandHistory = [];
+    let historyIndex = -1;
+    
+    // Banner göster
+    showBanner();
+    
+    // Giriş alanına odaklan
+    input.focus();
+    
+    // Komut girişini dinle
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const command = input.value.trim();
+            
+            if (command) {
+                // Komutu geçmişe ekle
+                commandHistory.push(command);
+                historyIndex = commandHistory.length;
+                
+                // Komutu ve kullanıcı girişini göster
+                terminal.innerHTML += `<div><span class="terminal-prompt">ZeroFind&gt;</span> <span class="terminal-command">${command}</span></div>`;
+                
+                // Komutu işle
+                processCommand(command);
+                
+                // Giriş alanını temizle
+                input.value = '';
+                
+                // Terminal çıktısını en aşağı kaydır
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+        } 
+        else if (e.key === 'ArrowUp') {
+            // Geçmiş komutlar içinde geri git
+            if (historyIndex > 0) {
+                historyIndex--;
+                input.value = commandHistory[historyIndex];
+                // İmleci en sona koy
+                setTimeout(() => {
+                    input.selectionStart = input.selectionEnd = input.value.length;
+                }, 0);
+            }
+            e.preventDefault();
+        } 
+        else if (e.key === 'ArrowDown') {
+            // Geçmiş komutlar içinde ileri git
+            if (historyIndex < commandHistory.length - 1) {
+                historyIndex++;
+                input.value = commandHistory[historyIndex];
+            } else {
+                historyIndex = commandHistory.length;
+                input.value = '';
+            }
+            e.preventDefault();
+        }
+    });
+    
+    // Sayfa tıklamasında giriş alanına odaklan
+    document.addEventListener('click', function() {
+        input.focus();
+    });
+    
+    // Pencere kapandığında uyarı
+    window.addEventListener('beforeunload', function(e) {
+        if (commandHistory.length > 0) {
+            // Kullanıcıya çıkış öncesi uyarı göster
+            e.preventDefault();
+            e.returnValue = '';
+            return '';
+        }
+    });
+    
+    // Terminal banner'ını göster
+    function showBanner() {
+        const banner = `
+ ______         _____ _       _ 
+|___  /        |  ___(_)     | |
+   / / ___ _ __| |_   _ _ __ | |
+  / / / _ \\ '__| _| | | '_ \\| |
+ / /_|  __/ |  | |   | | | | |_|
+/_____\\___|_|  \\_|   |_|_| |_(_)
+                                
+ZeroFind v1.0 (c) 2025 - Türkçe Güvenlik Tarama Aracı
+Kolay ve hızlı güvenlik taramaları için geliştirilmiştir.
+Komutları görmek için 'help' yazın.
+
+`;
+        terminal.innerHTML += `<div class="terminal-output">${banner}</div>`;
+    }
+    
+    // Komutu işle
+    function processCommand(command) {
+        const parts = command.split(' ');
+        const cmd = parts[0].toLowerCase();
+        
+        switch (cmd) {
+            case 'help':
+                showHelp();
+                break;
+            case 'scan':
+                if (parts.length < 2) {
+                    terminal.innerHTML += `<div class="terminal-error">Hata: Tarama için bir hedef belirtmelisiniz.</div>`;
+                    terminal.innerHTML += `<div class="terminal-error">Kullanım: scan [hedef] [hızlı|standart|derinlemesine]</div>`;
+                } else {
+                    const target = parts[1];
+                    const scanType = parts[2] || 'hızlı';
+                    startScan(target, scanType);
+                }
+                break;
+            case 'history':
+                showHistory();
+                break;
+            case 'clear':
+                terminal.innerHTML = '';
+                showBanner();
+                break;
+            case 'exit':
+                window.close();
+                break;
+            default:
+                terminal.innerHTML += `<div class="terminal-error">Hata: '${cmd}' komutu bulunamadı. Kullanılabilir komutları görmek için 'help' yazın.</div>`;
+                break;
+        }
+    }
+    
+    // Yardım bilgilerini göster
+    function showHelp() {
+        const helpText = `
+<div class="terminal-success">ZeroFind Terminal Yardım</div>
+<div class="terminal-output">
+Kullanılabilir komutlar:
+
+  scan [hedef] [hızlı|standart|derinlemesine]
+      Belirtilen hedef üzerinde port ve zafiyet taraması yapar.
+      Örnek: scan example.com hızlı
+      
+  help
+      Bu yardım mesajını gösterir.
+      
+  history
+      Önceki taramaların geçmişini gösterir.
+      
+  clear
+      Terminal ekranını temizler.
+      
+  exit
+      Terminal penceresini kapatır.
+
+Not: Terminal arayüzünü komut satırından başlatmak için:
+  python zerofind.py -t veya python zerofind.py --terminal
+</div>
+`;
+        terminal.innerHTML += helpText;
+    }
+    
+    // Tarama başlat
+    function startScan(target, scanType) {
+        terminal.innerHTML += `<div class="terminal-output">Tarama başlatılıyor: ${target} (${scanType})</div>`;
+        terminal.innerHTML += `<div class="terminal-warning">Bu işlem biraz zaman alabilir, lütfen bekleyin...</div>`;
+        
+        // Simüle edilmiş tarama işlemi
+        setTimeout(() => {
+            // Gerçek tarama yapılacak URL
+            const scanUrl = `/scan`;
+            
+            // POST verisi hazırla
+            const formData = new FormData();
+            formData.append('target', target);
+            formData.append('scan_type', scanType);
+            
+            // Tarama isteğini gönder
+            fetch(scanUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                // Eğer 302 yönlendirme varsa sonuç sayfasına git
+                if (response.redirected) {
+                    terminal.innerHTML += `<div class="terminal-success">Tarama tamamlandı. Sonuçlar bir tarayıcı penceresinde açılıyor...</div>`;
+                    window.open(response.url, '_blank');
+                } else {
+                    return response.text().then(html => {
+                        terminal.innerHTML += `<div class="terminal-error">Tarama hatası. Lütfen tekrar deneyin.</div>`;
+                    });
+                }
+            })
+            .catch(error => {
+                terminal.innerHTML += `<div class="terminal-error">Ağ hatası: ${error.message}</div>`;
+            });
+        }, 1000);
+    }
+    
+    // Tarama geçmişini göster
+    function showHistory() {
+        terminal.innerHTML += `<div class="terminal-output">Tarama geçmişi için web arayüzüne yönlendiriliyorsunuz...</div>`;
+        window.open('/history', '_blank');
+    }
+});
+</script>
+{% endblock %}
