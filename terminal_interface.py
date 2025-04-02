@@ -18,7 +18,6 @@ from port_scanner import scan_ports, is_valid_target, extract_domain
 from vulnerability_scanner import check_vulnerabilities
 from scanner import scan_target
 
-# Colorama'yı tüm platformlarda (Windows/Linux/Termux) çalışacak şekilde başlat
 init(autoreset=True, strip=False if platform.system() == 'Windows' else None)
 
 # İşletim sistemi bilgisi
@@ -658,4 +657,4 @@ def run_terminal_interface():
 
 if __name__ == "__main__":
     run_terminal_interface()
-un_terminal_interface()
+run_terminal_interface()
