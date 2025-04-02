@@ -29,12 +29,12 @@ def print_banner():
     """Uygulama başlık bannerını gösterir"""
     banner = f"""
 {Fore.CYAN}╔═══════════════════════════════════════════════════════════════════╗
-{Fore.CYAN}║ {Fore.YELLOW}███████╗███████╗██████╗  ██████╗ {Fore.GREEN}███████╗██╗███╗   ██╗██████╗  {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}╚══███╔╝██╔════╝██╔══██╗██╔═══██╗{Fore.GREEN}██╔════╝██║████╗  ██║██╔══██╗ {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}  ███╔╝ █████╗  ██████╔╝██║   ██║{Fore.GREEN}█████╗  ██║██╔██╗ ██║██║  ██║ {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW} ███╔╝  ██╔══╝  ██╔══██╗██║   ██║{Fore.GREEN}██╔══╝  ██║██║╚██╗██║██║  ██║ {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}███████╗███████╗██║  ██║╚██████╔╝{Fore.GREEN}██║     ██║██║ ╚████║██████╔╝ {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ {Fore.GREEN}╚═╝     ╚═╝╚═╝  ╚═══╝╚═════╝  {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}███████╗███████╗██████╗  ██████╗ {Fore.BLUE}███████╗██╗███╗   ██╗██████╗  {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}╚══███╔╝██╔════╝██╔══██╗██╔═══██╗{Fore.BLUE}██╔════╝██║████╗  ██║██╔══██╗ {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}  ███╔╝ █████╗  ██████╔╝██║   ██║{Fore.BLUE}█████╗  ██║██╔██╗ ██║██║  ██║ {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED} ███╔╝  ██╔══╝  ██╔══██╗██║   ██║{Fore.BLUE}██╔══╝  ██║██║╚██╗██║██║  ██║ {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}███████╗███████╗██║  ██║╚██████╔╝{Fore.BLUE}██║     ██║██║ ╚████║██████╔╝ {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ {Fore.BLUE}╚═╝     ╚═╝╚═╝  ╚═══╝╚═════╝  {Fore.CYAN}║
 {Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
 {Fore.CYAN}║ {Fore.WHITE}                    Güvenlik Tarama Aracı                         {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}                     Versiyon: 2.0 (2025)                         {Fore.CYAN}║
@@ -658,3 +658,4 @@ def run_terminal_interface():
 
 if __name__ == "__main__":
     run_terminal_interface()
+un_terminal_interface()
