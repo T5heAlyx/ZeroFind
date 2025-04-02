@@ -17,8 +17,6 @@ from colorama import init, Fore, Back, Style
 from port_scanner import scan_ports, is_valid_target, extract_domain
 from vulnerability_scanner import check_vulnerabilities
 from scanner import scan_target
-
-# Colorama'yı tüm platformlarda (Windows/Linux/Termux) çalışacak şekilde başlat
 init(autoreset=True, strip=False if platform.system() == 'Windows' else None)
 
 # İşletim sistemi bilgisi
@@ -29,16 +27,16 @@ def print_banner():
     """Uygulama başlık bannerını gösterir"""
     banner = f"""
 {Fore.CYAN}╔═══════════════════════════════════════════════════════════════════╗
-{Fore.CYAN}║ {Fore.YELLOW}███████╗███████╗██████╗  ██████╗ {Fore.GREEN}███████╗██╗███╗   ██╗██████╗  {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}╚══███╔╝██╔════╝██╔══██╗██╔═══██╗{Fore.GREEN}██╔════╝██║████╗  ██║██╔══██╗ {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}  ███╔╝ █████╗  ██████╔╝██║   ██║{Fore.GREEN}█████╗  ██║██╔██╗ ██║██║  ██║ {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW} ███╔╝  ██╔══╝  ██╔══██╗██║   ██║{Fore.GREEN}██╔══╝  ██║██║╚██╗██║██║  ██║ {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}███████╗███████╗██║  ██║╚██████╔╝{Fore.GREEN}██║     ██║██║ ╚████║██████╔╝ {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ {Fore.GREEN}╚═╝     ╚═╝╚═╝  ╚═══╝╚═════╝  {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}███████╗███████╗██████╗  ██████╗ {Fore.BLUE}███████╗██╗███╗   ██╗██████╗     {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}╚══███╔╝██╔════╝██╔══██╗██╔═══██╗{Fore.BLUE}██╔════╝██║████╗  ██║██╔══██╗    {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}  ███╔╝ █████╗  ██████╔╝██║   ██║{Fore.BLUE}█████╗  ██║██╔██╗ ██║██║  ██║ {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.RED} ███╔╝  ██╔══╝  ██╔══██╗██║   ██║{Fore.BLUE}██╔══╝  ██║██║╚██╗██║██║  ██║ {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.RED}███████╗███████╗██║  ██║╚██████╔╝{Fore.BLUE}██║     ██║██║ ╚████║██████╔╝ {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.RED}╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ {Fore.BLUE}╚═╝     ╚═╝╚═╝  ╚═══╝╚═════╝  {Fore.CYAN}   ║
 {Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
-{Fore.CYAN}║ {Fore.WHITE}                    Güvenlik Tarama Aracı                         {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.WHITE}                     Zafiyet Tarama Aracı                         {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}                     Versiyon: 2.0 (2025)                         {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.RED}                       made by wr4th0                            {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}                       made by {Fore.BLUE}wr4th0                             {Fore.CYAN}║
 {Fore.CYAN}╚═══════════════════════════════════════════════════════════════════╝
 """
     print(banner)
@@ -47,20 +45,20 @@ def print_menu():
     """Ana menüyü gösterir"""
     menu = f"""
 {Fore.CYAN}╔═══════════════════════════════════════════════════════════════════╗
-{Fore.CYAN}║ {Fore.WHITE}                         ANA MENÜ                               {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.WHITE}                          ANA MENÜ                               {Fore.CYAN} ║
 {Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
-{Fore.CYAN}║ {Fore.GREEN}Tarama İşlemleri:{Fore.WHITE}                                                {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Port Taraması Yap                                            {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}2) {Fore.WHITE}Güvenlik Açığı Taraması Yap                                  {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Tam Güvenlik Analizi (Port + Zafiyet Taraması)              {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}4) {Fore.WHITE}Toplu Domain Taraması                                        {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.GREEN}Tarama İşlemleri:{Fore.WHITE}                                                {Fore.CYAN} ║
+{Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Port Taraması Yap                                            {Fore.CYAN}  ║
+{Fore.CYAN}║ {Fore.YELLOW}2) {Fore.WHITE}Güvenlik Açığı Taraması Yap                                  {Fore.CYAN}  ║
+{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Tam Güvenlik Analizi (Port + Zafiyet Taraması)                 {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}4) {Fore.WHITE}Toplu Domain Taraması                                        {Fore.CYAN}  ║
 {Fore.CYAN}║                                                                   {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.GREEN}Araçlar ve Raporlar:{Fore.WHITE}                                             {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}5) {Fore.WHITE}Tarama Sonuçlarını Kaydet (TXT)                             {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}6) {Fore.WHITE}Tarama Sonuçlarını Dışa Aktar (JSON)                        {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}7) {Fore.WHITE}Tarama Geçmişini Görüntüle                                  {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}8) {Fore.WHITE}Yardım                                                       {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}9) {Fore.WHITE}Çıkış                                                        {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.GREEN}Araçlar ve Raporlar:{Fore.WHITE}                                             {Fore.CYAN} ║
+{Fore.CYAN}║ {Fore.YELLOW}5) {Fore.WHITE}Tarama Sonuçlarını Kaydet (TXT)                             {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.YELLOW}6) {Fore.WHITE}Tarama Sonuçlarını Dışa Aktar (JSON)                        {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.YELLOW}7) {Fore.WHITE}Tarama Geçmişini Görüntüle                                  {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.YELLOW}8) {Fore.WHITE}Yardım                                                       {Fore.CYAN}  ║
+{Fore.CYAN}║ {Fore.YELLOW}9) {Fore.WHITE}Çıkış                                                        {Fore.CYAN}  ║
 {Fore.CYAN}╚═══════════════════════════════════════════════════════════════════╝
 """
     print(menu)
@@ -72,14 +70,14 @@ def print_help():
 {Fore.CYAN}║ {Fore.WHITE}                   ZEROFIND YARDIM                             {Fore.CYAN}║
 {Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
 {Fore.CYAN}║ {Fore.WHITE}ZeroFind, web sitelerinin ve ağ sistemlerinin güvenlik            {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.WHITE}açıklarını tespit etmek için kullanılan bir güvenlik tarama       {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.WHITE}açıklarını tespit etmek için kullanılan bir zafiyet tarama        {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}aracıdır.                                                         {Fore.CYAN}║
 {Fore.CYAN}║                                                                   {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}Kullanım Örnekleri:{Fore.WHITE}                                              {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}Kullanım Örnekleri:{Fore.WHITE}                                                {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}- Tek bir web sitesi taramak için: örnek.com                      {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}- IP adresi taramak için: 192.168.1.1                             {Fore.CYAN}║
 {Fore.CYAN}║                                                                   {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}Tarama Tipleri:{Fore.WHITE}                                                  {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}Tarama Tipleri:{Fore.WHITE}                                                   {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}- Hızlı Tarama: Temel portları ve güvenlik açıklarını kontrol     {Fore.CYAN}║
 {Fore.CYAN}║   eder. Birkaç dakika sürer.                                      {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}- Standart Tarama: Daha fazla port ve açık kontrol eder. 5-15     {Fore.CYAN}║
@@ -87,18 +85,18 @@ def print_help():
 {Fore.CYAN}║ {Fore.WHITE}- Derinlemesine Tarama: Tüm portları ve zafiyetleri kontrol       {Fore.CYAN}║
 {Fore.CYAN}║   eder. Uzun sürebilir, dikkatli kullanın.                        {Fore.CYAN}║
 {Fore.CYAN}║                                                                   {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}Komut Satırı Kullanımı:{Fore.WHITE}                                          {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}Komut Satırı Kullanımı:{Fore.WHITE}                                           {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}- Tüm Arayüzler: python zerofind.py                               {Fore.CYAN}║
 {Fore.CYAN}║   (Önce terminal, sonra web arayüzü)                              {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}- Sadece Terminal: python zerofind.py --terminal                  {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}- Sadece Web: python zerofind.py --web                            {Fore.CYAN}║
 {Fore.CYAN}║                                                                   {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}Önemli Notlar:{Fore.WHITE}                                                   {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}Önemli Notlar:{Fore.WHITE}                                                    {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}- Bu aracı yalnızca izin verilen sistemlerde kullanın.            {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}- Yetkisiz kullanım yasal sonuçlar doğurabilir.                   {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}- Web arayüzü için tarayıcınızda http://localhost:5000 adresini   {Fore.CYAN}║
 {Fore.CYAN}║   ziyaret edin.                                                   {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.RED}- Made by wr4th0                                                   {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}- made by wr4th0                                                  {Fore.CYAN}║
 {Fore.CYAN}╚═══════════════════════════════════════════════════════════════════╝
 """
     print(help_text)
@@ -109,9 +107,9 @@ def print_scan_options():
 {Fore.CYAN}╔═══════════════════════════════════════════════════════════════════╗
 {Fore.CYAN}║ {Fore.WHITE}                     TARAMA TİPİ SEÇİN                          {Fore.CYAN}║
 {Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
-{Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Hızlı Tarama      {Fore.BLUE}(Hızlı, temel kontroller)                {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}2) {Fore.WHITE}Standart Tarama   {Fore.BLUE}(Dengeli, çoğu açığı bulur)              {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Derinlemesine     {Fore.BLUE}(Yavaş, kapsamlı kontroller)             {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Hızlı Tarama      {Fore.BLUE}(Hızlı, temel kontroller)                 {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.YELLOW}2) {Fore.WHITE}Standart Tarama   {Fore.BLUE}(Dengeli, çoğu açığı bulur)               {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Derinlemesine     {Fore.BLUE}(Yavaş, kapsamlı kontroller)              {Fore.CYAN}   ║
 {Fore.CYAN}╚═══════════════════════════════════════════════════════════════════╝
 """
     print(options)
@@ -547,7 +545,7 @@ def run_terminal_interface():
         else:
             os.system('clear')
     except:
-        # Ekran temizleme başarısız olursa birkaç satır boşluk bırak
+        # Ekran temizleme başarısız  birkaç satır boşluk bırak
         print("\n" * 100)
     print_banner()
     
@@ -636,7 +634,7 @@ def run_terminal_interface():
             print_help()
             
         elif choice == '9':  # Çıkış
-            print(f"\n{Fore.GREEN}[✓] ZeroFind'dan çıkılıyor. İyi günler!")
+            print(f"\n{Fore.GREEN}[✓] ZeroFind'dan çıkılıyor, İyi Günler...")
             break
             
         else:
@@ -658,3 +656,4 @@ def run_terminal_interface():
 
 if __name__ == "__main__":
     run_terminal_interface()
+run_terminal_interface()
