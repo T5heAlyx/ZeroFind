@@ -658,4 +658,4 @@ def run_terminal_interface():
 
 if __name__ == "__main__":
     run_terminal_interface()
-un_terminal_interface()
+run_terminal_interface()
