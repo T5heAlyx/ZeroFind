@@ -17,7 +17,6 @@ from colorama import init, Fore, Back, Style
 from port_scanner import scan_ports, is_valid_target, extract_domain
 from vulnerability_scanner import check_vulnerabilities
 from scanner import scan_target
-olursa
 init(autoreset=True, strip=False if platform.system() == 'Windows' else None)
 
 # İşletim sistemi bilgisi
