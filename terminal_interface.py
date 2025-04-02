@@ -107,9 +107,9 @@ def print_scan_options():
 {Fore.CYAN}╔═══════════════════════════════════════════════════════════════════╗
 {Fore.CYAN}║ {Fore.WHITE}                     TARAMA TİPİ SEÇİN                          {Fore.CYAN}║
 {Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
-{Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Hızlı Tarama      {Fore.BLUE}(Hızlı, temel kontroller)                {Fore.CYAN}   ║
-{Fore.CYAN}║ {Fore.YELLOW}2) {Fore.WHITE}Standart Tarama   {Fore.BLUE}(Dengeli, çoğu açığı bulur)              {Fore.CYAN}   ║
-{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Derinlemesine     {Fore.BLUE}(Yavaş, kapsamlı kontroller)             {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Hızlı Tarama      {Fore.BLUE}(Hızlı, temel kontroller)                 {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.YELLOW}2) {Fore.WHITE}Standart Tarama   {Fore.BLUE}(Dengeli, çoğu açığı bulur)               {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Derinlemesine     {Fore.BLUE}(Yavaş, kapsamlı kontroller)              {Fore.CYAN}   ║
 {Fore.CYAN}╚═══════════════════════════════════════════════════════════════════╝
 """
     print(options)
