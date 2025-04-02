@@ -18,6 +18,7 @@ from port_scanner import scan_ports, is_valid_target, extract_domain
 from vulnerability_scanner import check_vulnerabilities
 from scanner import scan_target
 
+# Colorama'yı tüm platformlarda (Windows/Linux/Termux) çalışacak şekilde başlat
 init(autoreset=True, strip=False if platform.system() == 'Windows' else None)
 
 # İşletim sistemi bilgisi
@@ -26,42 +27,41 @@ IS_TERMUX = 'com.termux' in os.environ.get('PREFIX', '')
 
 def print_banner():
     """Uygulama başlık bannerını gösterir"""
-
-banner = f"""
-{Fore.CYAN}╔════════════════════════════════════════════════════════════════╗
+    banner = f"""
+{Fore.CYAN}╔═══════════════════════════════════════════════════════════════════╗
 {Fore.CYAN}║ {Fore.RED}███████╗███████╗██████╗  ██████╗ {Fore.BLUE}███████╗██╗███╗   ██╗██████╗  {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.RED}╚══███╔╝██╔════╝██╔══██╗██╔═══██╗{Fore.BLUE}██╔════╝██║████╗  ██║██╔══██╗ {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.RED}  ███╔╝ █████╗  ██████╔╝██║   ██║{Fore.BLUE}█████╗  ██║██╔██╗ ██║██║  ██║ {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.RED} ███╔╝  ██╔══╝  ██╔══██╗██║   ██║{Fore.BLUE}██╔══╝  ██║██║╚██╗██║██║  ██║ {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.RED}███████╗███████╗██║  ██║╚██████╔╝{Fore.BLUE}██║     ██║██║ ╚████║██████╔╝ {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.RED}╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ {Fore.BLUE}╚═╝     ╚═╝╚═╝  ╚═══╝╚═════╝  {Fore.CYAN}║
-{Fore.CYAN}╠════════════════════════════════════════════════════════════════╣
-{Fore.CYAN}║ {Fore.WHITE}                    Güvenlik Tarama Aracı                      {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.WHITE}                     Versiyon: 2.0 (2025)                      {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.RED}                       made by wr4th0                          {Fore.CYAN}║
-{Fore.CYAN}╚════════════════════════════════════════════════════════════════╝
+{Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
+{Fore.CYAN}║ {Fore.WHITE}                    Güvenlik Tarama Aracı                         {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.WHITE}                     Versiyon: 2.0 (2025)                         {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}                       made by wr4th0                            {Fore.CYAN}║
+{Fore.CYAN}╚═══════════════════════════════════════════════════════════════════╝
 """
-print(banner)
+    print(banner)
 
 def print_menu():
     """Ana menüyü gösterir"""
     menu = f"""
-{Fore.CYAN}╔════════════════════════════════════════════════════════════════╗
-{Fore.CYAN}║ {Fore.WHITE}                         ANA MENÜ                              {Fore.CYAN}║
-{Fore.CYAN}╠════════════════════════════════════════════════════════════════╣
-{Fore.CYAN}║ {Fore.GREEN}Tarama İşlemleri:{Fore.WHITE}                                              {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Port Taraması Yap                                          {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}2) {Fore.WHITE}Güvenlik Açığı Taraması Yap                                {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Tam Güvenlik Analizi (Port + Zafiyet Taraması)            {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}4) {Fore.WHITE}Toplu Domain Taraması                                      {Fore.CYAN}║
-{Fore.CYAN}║                                                                 {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.GREEN}Araçlar ve Raporlar:{Fore.WHITE}                                           {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}5) {Fore.WHITE}Tarama Sonuçlarını Kaydet (TXT)                           {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}6) {Fore.WHITE}Tarama Sonuçlarını Dışa Aktar (JSON)                      {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}7) {Fore.WHITE}Tarama Geçmişini Görüntüle                                {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}8) {Fore.WHITE}Yardım                                                     {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}9) {Fore.WHITE}Çıkış                                                      {Fore.CYAN}║
-{Fore.CYAN}╚════════════════════════════════════════════════════════════════╝
+{Fore.CYAN}╔═══════════════════════════════════════════════════════════════════╗
+{Fore.CYAN}║ {Fore.WHITE}                         ANA MENÜ                               {Fore.CYAN}║
+{Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
+{Fore.CYAN}║ {Fore.GREEN}Tarama İşlemleri:{Fore.WHITE}                                                {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Port Taraması Yap                                            {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}2) {Fore.WHITE}Güvenlik Açığı Taraması Yap                                  {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Tam Güvenlik Analizi (Port + Zafiyet Taraması)              {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}4) {Fore.WHITE}Toplu Domain Taraması                                        {Fore.CYAN}║
+{Fore.CYAN}║                                                                   {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.GREEN}Araçlar ve Raporlar:{Fore.WHITE}                                             {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}5) {Fore.WHITE}Tarama Sonuçlarını Kaydet (TXT)                             {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}6) {Fore.WHITE}Tarama Sonuçlarını Dışa Aktar (JSON)                        {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}7) {Fore.WHITE}Tarama Geçmişini Görüntüle                                  {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}8) {Fore.WHITE}Yardım                                                       {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}9) {Fore.WHITE}Çıkış                                                        {Fore.CYAN}║
+{Fore.CYAN}╚═══════════════════════════════════════════════════════════════════╝
 """
     print(menu)
 
@@ -658,4 +658,4 @@ def run_terminal_interface():
 
 if __name__ == "__main__":
     run_terminal_interface()
-run_terminal_interface()
+un_terminal_interface()
