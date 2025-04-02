@@ -50,7 +50,7 @@ def print_menu():
 {Fore.CYAN}║ {Fore.GREEN}Tarama İşlemleri:{Fore.WHITE}                                                {Fore.CYAN} ║
 {Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Port Taraması Yap                                            {Fore.CYAN}  ║
 {Fore.CYAN}║ {Fore.YELLOW}2) {Fore.WHITE}Güvenlik Açığı Taraması Yap                                  {Fore.CYAN}  ║
-{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Tam Güvenlik Analizi (Port + Zafiyet Taraması)                 {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Tam Zaafiyet Analizi (Port + Zafiyet Taraması)                 {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.YELLOW}4) {Fore.WHITE}Toplu Domain Taraması                                        {Fore.CYAN}  ║
 {Fore.CYAN}║                                                                   {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.GREEN}Araçlar ve Raporlar:{Fore.WHITE}                                             {Fore.CYAN} ║
@@ -70,7 +70,7 @@ def print_help():
 {Fore.CYAN}║ {Fore.WHITE}                   ZEROFIND YARDIM                             {Fore.CYAN}║
 {Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
 {Fore.CYAN}║ {Fore.WHITE}ZeroFind, web sitelerinin ve ağ sistemlerinin güvenlik            {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.WHITE}açıklarını tespit etmek için kullanılan bir güvenlik tarama       {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.WHITE}açıklarını tespit etmek için kullanılan bir zaafiyet tarama       {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}aracıdır.                                                         {Fore.CYAN}║
 {Fore.CYAN}║                                                                   {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.YELLOW}Kullanım Örnekleri:{Fore.WHITE}                                                {Fore.CYAN}║
@@ -229,7 +229,7 @@ def run_vulnerability_scan(target, port_results, scan_type):
         return []
 
 def run_full_security_scan(target, scan_type):
-    """Tam güvenlik analizi yapar (port + zafiyet taraması)"""
+    """Tam zaafiyet analizi yapar (port + zafiyet taraması)"""
     port_results = run_port_scan(target, scan_type)
     if port_results:
         vuln_results = run_vulnerability_scan(target, port_results, scan_type)
@@ -587,7 +587,7 @@ def run_terminal_interface():
             }
             scan_history.append(last_scan.copy())
                 
-        elif choice == '3':  # Tam Güvenlik Analizi
+        elif choice == '3':  # Tam Zaafiyet Analizi
             target = get_target_input()
             scan_type = get_scan_type()
             port_results, vuln_results = run_full_security_scan(target, scan_type)
