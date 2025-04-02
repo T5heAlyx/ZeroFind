@@ -18,6 +18,7 @@ from port_scanner import scan_ports, is_valid_target, extract_domain
 from vulnerability_scanner import check_vulnerabilities
 from scanner import scan_target
 
+# Colorama'yı tüm platformlarda (Windows/Linux/Termux) çalışacak şekilde başlat
 init(autoreset=True, strip=False if platform.system() == 'Windows' else None)
 
 # İşletim sistemi bilgisi
@@ -28,16 +29,16 @@ def print_banner():
     """Uygulama başlık bannerını gösterir"""
     banner = f"""
 {Fore.CYAN}╔═══════════════════════════════════════════════════════════════════╗
-{Fore.CYAN}║ {Fore.RED}███████╗███████╗██████╗  ██████╗ {Fore.BLUE}███████╗██╗███╗   ██╗██████╗  {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.RED}╚══███╔╝██╔════╝██╔══██╗██╔═══██╗{Fore.BLUE}██╔════╝██║████╗  ██║██╔══██╗ {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.RED}  ███╔╝ █████╗  ██████╔╝██║   ██║{Fore.BLUE}█████╗  ██║██╔██╗ ██║██║  ██║ {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.RED} ███╔╝  ██╔══╝  ██╔══██╗██║   ██║{Fore.BLUE}██╔══╝  ██║██║╚██╗██║██║  ██║ {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.RED}███████╗███████╗██║  ██║╚██████╔╝{Fore.BLUE}██║     ██║██║ ╚████║██████╔╝ {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.RED}╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ {Fore.BLUE}╚═╝     ╚═╝╚═╝  ╚═══╝╚═════╝  {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}███████╗███████╗██████╗  ██████╗ {Fore.BLUE}███████╗██╗███╗   ██╗██████╗     {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}╚══███╔╝██╔════╝██╔══██╗██╔═══██╗{Fore.BLUE}██╔════╝██║████╗  ██║██╔══██╗    {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}  ███╔╝ █████╗  ██████╔╝██║   ██║{Fore.BLUE}█████╗  ██║██╔██╗ ██║██║  ██║ {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.RED} ███╔╝  ██╔══╝  ██╔══██╗██║   ██║{Fore.BLUE}██╔══╝  ██║██║╚██╗██║██║  ██║ {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.RED}███████╗███████╗██║  ██║╚██████╔╝{Fore.BLUE}██║     ██║██║ ╚████║██████╔╝ {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.RED}╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ {Fore.BLUE}╚═╝     ╚═╝╚═╝  ╚═══╝╚═════╝  {Fore.CYAN}   ║
 {Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
 {Fore.CYAN}║ {Fore.WHITE}                    Güvenlik Tarama Aracı                         {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}                     Versiyon: 2.0 (2025)                         {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.RED}                       made by wr4th0                            {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.RED}                       made by wr4th0                              {Fore.CYAN}║
 {Fore.CYAN}╚═══════════════════════════════════════════════════════════════════╝
 """
     print(banner)
@@ -46,7 +47,7 @@ def print_menu():
     """Ana menüyü gösterir"""
     menu = f"""
 {Fore.CYAN}╔═══════════════════════════════════════════════════════════════════╗
-{Fore.CYAN}║ {Fore.WHITE}                         ANA MENÜ                               {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.WHITE}                         ANA MENÜ                               {Fore.CYAN}   ║
 {Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
 {Fore.CYAN}║ {Fore.GREEN}Tarama İşlemleri:{Fore.WHITE}                                                {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Port Taraması Yap                                            {Fore.CYAN}║
