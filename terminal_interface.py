@@ -34,7 +34,7 @@ def print_banner():
 {Fore.CYAN}║ {Fore.RED}███████╗███████╗██║  ██║╚██████╔╝{Fore.BLUE}██║     ██║██║ ╚████║██████╔╝ {Fore.CYAN}   ║
 {Fore.CYAN}║ {Fore.RED}╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ {Fore.BLUE}╚═╝     ╚═╝╚═╝  ╚═══╝╚═════╝  {Fore.CYAN}   ║
 {Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
-{Fore.CYAN}║ {Fore.WHITE}                    Güvenlik Tarama Aracı                         {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.WHITE}                    Zaafiyet Tarama Aracı                         {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.WHITE}                     Versiyon: 2.0 (2025)                         {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.RED}                       made by wr4th0                             {Fore.CYAN}║
 {Fore.CYAN}╚═══════════════════════════════════════════════════════════════════╝
