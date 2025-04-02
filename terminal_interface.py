@@ -26,7 +26,8 @@ IS_TERMUX = 'com.termux' in os.environ.get('PREFIX', '')
 
 def print_banner():
     """Uygulama başlık bannerını gösterir"""
- banner = f"""
+
+banner = f"""
 {Fore.CYAN}╔════════════════════════════════════════════════════════════════╗
 {Fore.CYAN}║ {Fore.RED}███████╗███████╗██████╗  ██████╗ {Fore.BLUE}███████╗██╗███╗   ██╗██████╗  {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.RED}╚══███╔╝██╔════╝██╔══██╗██╔═══██╗{Fore.BLUE}██╔════╝██║████╗  ██║██╔══██╗ {Fore.CYAN}║
