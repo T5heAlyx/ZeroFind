@@ -18,7 +18,6 @@ from port_scanner import scan_ports, is_valid_target, extract_domain
 from vulnerability_scanner import check_vulnerabilities
 from scanner import scan_target
 
-# Colorama'yı tüm platformlarda (Windows/Linux/Termux) çalışacak şekilde başlat
 init(autoreset=True, strip=False if platform.system() == 'Windows' else None)
 
 # İşletim sistemi bilgisi
@@ -52,15 +51,15 @@ def print_menu():
 {Fore.CYAN}║ {Fore.GREEN}Tarama İşlemleri:{Fore.WHITE}                                                {Fore.CYAN} ║
 {Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Port Taraması Yap                                            {Fore.CYAN}  ║
 {Fore.CYAN}║ {Fore.YELLOW}2) {Fore.WHITE}Güvenlik Açığı Taraması Yap                                  {Fore.CYAN}  ║
-{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Tam Güvenlik Analizi (Port + Zafiyet Taraması)                  {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Tam Güvenlik Analizi (Port + Zafiyet Taraması)                 {Fore.CYAN}║
 {Fore.CYAN}║ {Fore.YELLOW}4) {Fore.WHITE}Toplu Domain Taraması                                        {Fore.CYAN}  ║
 {Fore.CYAN}║                                                                   {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.GREEN}Araçlar ve Raporlar:{Fore.WHITE}                                             {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}5) {Fore.WHITE}Tarama Sonuçlarını Kaydet (TXT)                             {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}6) {Fore.WHITE}Tarama Sonuçlarını Dışa Aktar (JSON)                        {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}7) {Fore.WHITE}Tarama Geçmişini Görüntüle                                  {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}8) {Fore.WHITE}Yardım                                                       {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}9) {Fore.WHITE}Çıkış                                                        {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.GREEN}Araçlar ve Raporlar:{Fore.WHITE}                                             {Fore.CYAN} ║
+{Fore.CYAN}║ {Fore.YELLOW}5) {Fore.WHITE}Tarama Sonuçlarını Kaydet (TXT)                             {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.YELLOW}6) {Fore.WHITE}Tarama Sonuçlarını Dışa Aktar (JSON)                        {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.YELLOW}7) {Fore.WHITE}Tarama Geçmişini Görüntüle                                  {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.YELLOW}8) {Fore.WHITE}Yardım                                                       {Fore.CYAN}  ║
+{Fore.CYAN}║ {Fore.YELLOW}9) {Fore.WHITE}Çıkış                                                        {Fore.CYAN}  ║
 {Fore.CYAN}╚═══════════════════════════════════════════════════════════════════╝
 """
     print(menu)
