@@ -46,7 +46,7 @@ def print_menu():
     """Ana menüyü gösterir"""
     menu = f"""
 {Fore.CYAN}╔═══════════════════════════════════════════════════════════════════╗
-{Fore.CYAN}║ {Fore.WHITE}                         ANA MENÜ                               {Fore.CYAN}  ║
+{Fore.CYAN}║ {Fore.WHITE}                          ANA MENÜ                               {Fore.CYAN} ║
 {Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
 {Fore.CYAN}║ {Fore.GREEN}Tarama İşlemleri:{Fore.WHITE}                                                {Fore.CYAN} ║
 {Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Port Taraması Yap                                            {Fore.CYAN}  ║
@@ -108,9 +108,9 @@ def print_scan_options():
 {Fore.CYAN}╔═══════════════════════════════════════════════════════════════════╗
 {Fore.CYAN}║ {Fore.WHITE}                     TARAMA TİPİ SEÇİN                          {Fore.CYAN}║
 {Fore.CYAN}╠═══════════════════════════════════════════════════════════════════╣
-{Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Hızlı Tarama      {Fore.BLUE}(Hızlı, temel kontroller)                {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}2) {Fore.WHITE}Standart Tarama   {Fore.BLUE}(Dengeli, çoğu açığı bulur)              {Fore.CYAN}║
-{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Derinlemesine     {Fore.BLUE}(Yavaş, kapsamlı kontroller)             {Fore.CYAN}║
+{Fore.CYAN}║ {Fore.YELLOW}1) {Fore.WHITE}Hızlı Tarama      {Fore.BLUE}(Hızlı, temel kontroller)                {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.YELLOW}2) {Fore.WHITE}Standart Tarama   {Fore.BLUE}(Dengeli, çoğu açığı bulur)              {Fore.CYAN}   ║
+{Fore.CYAN}║ {Fore.YELLOW}3) {Fore.WHITE}Derinlemesine     {Fore.BLUE}(Yavaş, kapsamlı kontroller)             {Fore.CYAN}   ║
 {Fore.CYAN}╚═══════════════════════════════════════════════════════════════════╝
 """
     print(options)
@@ -635,7 +635,7 @@ def run_terminal_interface():
             print_help()
             
         elif choice == '9':  # Çıkış
-            print(f"\n{Fore.GREEN}[✓] ZeroFind'dan çıkılıyor. İyi günler!")
+            print(f"\n{Fore.GREEN}[✓] ZeroFind'dan çıkılıyor...")
             break
             
         else:
