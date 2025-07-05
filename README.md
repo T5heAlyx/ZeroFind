@@ -1,4 +1,4 @@
-# ZeroFind Zafiyet Tarama Aracı
+# ZeroFind Zafiyet Tarama Aracı [ALPHA]
 
 ![version](https://img.shields.io/badge/version-2.0-blue)
 ![language](https://img.shields.io/badge/language-Python-green)
